@@ -1,2 +1,1 @@
-# ctu-client-sdk
-顶象风控sdk
+java SDK for ctu product
