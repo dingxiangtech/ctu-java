@@ -10,12 +10,6 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 
-/**
- * @FileName: HttpClientPool.java
- * @Description: HttpClientPool.java类说明
- * @Author: wuling
- * @Date: 2017/12/20 下午8:31
- */
 public class HttpClientPool {
     private static PoolingHttpClientConnectionManager connManager = null;
     RequestConfig requestConfig = null;
@@ -40,8 +34,8 @@ public class HttpClientPool {
 
     private HttpClientPool() {
         connManager = new PoolingHttpClientConnectionManager();
-        connManager.setMaxTotal(800);
-        connManager.setDefaultMaxPerRoute(400);
+        connManager.setMaxTotal(2000);
+        connManager.setDefaultMaxPerRoute(100);
         requestConfig = RequestConfig.custom()
                 .setConnectTimeout(connectTimeout).setConnectionRequestTimeout(connectionRequestTimeout)
                 .setSocketTimeout(socketTimeout).build();

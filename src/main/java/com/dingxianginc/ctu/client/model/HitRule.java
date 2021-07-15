@@ -6,9 +6,6 @@ package com.dingxianginc.ctu.client.model;
 
 import java.io.Serializable;
 
-/**
- * Created by dingxiang-inc on 2017/5/5.
- */
 public class HitRule implements Serializable {
     private Long id;
     private String leftValue;

@@ -6,13 +6,10 @@ package com.dingxianginc.ctu.client.model;
 
 import java.io.Serializable;
 
-/**
- * Created by dingxiang-inc on 2017/5/5.
- */
 public class CtuResponse implements Serializable {
     private String uuid;               // 服务端返回的请求标识码，供服务端排查问题
     private CtuResponseStatus status;  // 状态码
-    private CtuResult result;          // 防控结果
+    private CtuEntireResult ctuEntireResult;          // 防控结果
 
 
     public CtuResponse() {
@@ -22,13 +19,13 @@ public class CtuResponse implements Serializable {
         this.uuid = uuid;
     }
 
-    public CtuResponse(String uuid, CtuResult ctuResult) {
-        this(uuid, ctuResult, CtuResponseStatus.SUCCESS);
+    public CtuResponse(String uuid, CtuEntireResult ctuEntireResult) {
+        this(uuid, ctuEntireResult, CtuResponseStatus.SUCCESS);
     }
 
-    public CtuResponse(String uuid, CtuResult ctuResult, CtuResponseStatus status) {
+    public CtuResponse(String uuid, CtuEntireResult ctuEntireResult, CtuResponseStatus status) {
         this.uuid = uuid;
-        this.result = ctuResult;
+        this.ctuEntireResult = ctuEntireResult;
         this.status = status;
     }
 
@@ -48,11 +45,11 @@ public class CtuResponse implements Serializable {
         this.status = status;
     }
 
-    public CtuResult getResult() {
-        return result;
+    public CtuEntireResult getResult() {
+        return ctuEntireResult;
     }
 
-    public void setResult(CtuResult result) {
-        this.result = result;
+    public void setResult(CtuEntireResult ctuEntireResult) {
+        this.ctuEntireResult = ctuEntireResult;
     }
 }

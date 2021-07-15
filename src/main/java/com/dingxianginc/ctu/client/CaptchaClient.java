@@ -6,14 +6,12 @@ import com.dingxianginc.ctu.client.model.CaptchaResponse;
 import com.dingxianginc.ctu.client.model.CaptchaStatus;
 import com.dingxianginc.ctu.client.util.HttpClientPool;
 import com.dingxianginc.ctu.client.util.InputStreamUtils;
+import com.dingxianginc.ctu.client.util.StringUtils;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
-
-import java.util.concurrent.ExecutionException;
 
 /** Created by dingxiang-inc on 2017/7/31. */
 public class CaptchaClient {
@@ -31,28 +29,39 @@ public class CaptchaClient {
     this.requestConfig = HttpClientPool.getInstance().getRequestConfig();
   }
 
+  public void setCaptchaUrl(String captchaUrl) {
+    this.captchaUrl = captchaUrl;
+  }
+
   public CaptchaClient(
-      String appId,
-      String appSecret,
-      int connectTimeout,
-      int connectionRequestTimeout,
-      int socketTimeout) {
+          String appId,
+          String appSecret,
+          int connectTimeout,
+          int connectionRequestTimeout,
+          int socketTimeout) {
     this.appId = appId;
     this.appSecret = appSecret;
     this.httpClient = HttpClientPool.getInstance().getHttpClient();
     this.requestConfig =
-        RequestConfig.custom()
-            .setConnectTimeout(connectTimeout)
-            .setConnectionRequestTimeout(connectionRequestTimeout)
-            .setSocketTimeout(socketTimeout)
-            .build();
+            RequestConfig.custom()
+                    .setConnectTimeout(connectTimeout)
+                    .setConnectionRequestTimeout(connectionRequestTimeout)
+                    .setSocketTimeout(socketTimeout)
+                    .build();
+  }
+
+  public CaptchaResponse verifyToken(String token, String ip) throws Exception {
+    return getResponse(token, ip);
   }
 
   public CaptchaResponse verifyToken(String token) throws Exception {
+    return getResponse(token, null);
+  }
 
-    if (StringUtils.isBlank(token)
-        || StringUtils.isBlank(appId)
-        || StringUtils.isBlank(appSecret) || (token.length() > 1024)) {
+  private CaptchaResponse getResponse(String token, String ip) throws Exception {
+    if (StringUtils.isEmpty(token)
+            || StringUtils.isEmpty(appId)
+            || StringUtils.isEmpty(appSecret) || (token.length() > 1024) || token.length() < 10) {
       return new CaptchaResponse(false, CaptchaStatus.WRONG_PARAMETER);
     }
     String[] args = token.split(":");
@@ -64,9 +73,12 @@ public class CaptchaClient {
     }else{
       key = "";
     }
-    String reqUrl =
-        String.format(
-            "%s?token=%s&constId=%s&appKey=%s&sign=%s", captchaUrl, args[0], key, appId, sign);
+    String reqUrl = String.format(
+            "%s?token=%s&constId=%s&appKey=%s&sign=%s&ip=%s", captchaUrl, args[0], key, appId, sign, (ip == null)?"":ip);
+    return getHttpResponse(reqUrl);
+  }
+
+  private CaptchaResponse getHttpResponse(String reqUrl) throws Exception {
     HttpGet httpGet = null;
     boolean flag = false;
     try {
@@ -77,8 +89,7 @@ public class CaptchaClient {
       e.printStackTrace();
     }
     if (flag || (httpGet == null)) {
-      return new CaptchaResponse(false, CaptchaStatus.WRONG_PARAMETER);
-    }
+      return new CaptchaResponse(false, CaptchaStatus.WRONG_PARAMETER);  }
     CloseableHttpResponse response = null;
     try {
       response = httpClient.execute(httpGet);
@@ -86,7 +97,11 @@ public class CaptchaClient {
         String responseData = InputStreamUtils.readToString(response.getEntity().getContent());
         JSONObject resObject = JSON.parseObject(responseData);
         Boolean result = Boolean.parseBoolean(resObject.getString("success"));
-        return new CaptchaResponse(result, CaptchaStatus.SERVER_SUCCESS);
+        String ip = resObject.getString("ip");
+        String tpc = resObject.getString("tpc");
+        String uid = resObject.getString("uid");
+        String code = resObject.getString("code");
+        return new CaptchaResponse(result, CaptchaStatus.SERVER_SUCCESS, ip, tpc, uid, code);
       } else {
         return new CaptchaResponse(true, CaptchaStatus.SERVER_FAILED);
       }
@@ -98,10 +113,6 @@ public class CaptchaClient {
       }
       httpGet.releaseConnection();
     }
-  }
-
-  public void setCaptchaUrl(String captchaUrl) {
-    this.captchaUrl = captchaUrl;
   }
 
   private String getVerifySign(String appSecret, String token) {

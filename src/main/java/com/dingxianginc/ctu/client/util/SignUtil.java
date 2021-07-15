@@ -9,7 +9,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.dingxianginc.ctu.client.model.CtuRequest;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.commons.lang3.StringUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -17,9 +16,6 @@ import java.io.InputStream;
 import java.util.Map;
 import java.util.TreeMap;
 
-/**
- * Created by dingxiang-inc on 2017/5/5.
- */
 public class SignUtil {
     private static final String EVENT_CODE = "eventCode";
     private static final String FLAG = "flag";
@@ -78,7 +74,7 @@ public class SignUtil {
             sign = sign_v0(appSecret, ctuRequest);
         }
 
-        if (StringUtils.equals(requestSign, sign)) {
+        if (requestSign.equals(sign)) {
             return true;
         }
 

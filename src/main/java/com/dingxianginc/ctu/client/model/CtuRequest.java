@@ -7,9 +7,6 @@ package com.dingxianginc.ctu.client.model;
 import java.io.Serializable;
 import java.util.Map;
 
-/**
- * Created by dingxiang-inc on 2017/5/5.
- */
 public class CtuRequest implements Serializable {
     private static final long serialVersionUID = -6582668008857059475L;
     private String eventCode;            // 事件code
@@ -37,6 +34,9 @@ public class CtuRequest implements Serializable {
     }
 
     public void setData(Map<String, Object> data) {
+        for (Map.Entry<String, Object> entry : data.entrySet()) {
+            data.put(entry.getKey(), String.valueOf(entry.getValue()));
+        }
         this.data = data;
     }
 

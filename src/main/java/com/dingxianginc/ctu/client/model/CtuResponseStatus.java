@@ -4,9 +4,6 @@
 
 package com.dingxianginc.ctu.client.model;
 
-/**
- * Created by dingxiang-inc on 2017/5/5.
- */
 public enum CtuResponseStatus {
     SUCCESS("成功"),
 //    HAS_RISK("有安全防空风险"),
@@ -27,7 +24,10 @@ public enum CtuResponseStatus {
     QPS_EXCEEDING_MAXIMUM_THRESHOLD("QPS超过最大阀值"),
     SERVER_CONNECT_FAILED("服务器通信异常"),
 
-    SERVICE_INTERNAL_ERROR("服务器内部错误");
+    SERVICE_INTERNAL_ERROR("服务器内部错误"),
+
+    NO_TRUST_IN_NAMELIST("该次请求第三方名单出错,结果不可信");
+
     private String statusDesc;
 
     private CtuResponseStatus(String statusDesc) {

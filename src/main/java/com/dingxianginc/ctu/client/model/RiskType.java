@@ -4,9 +4,6 @@
 
 package com.dingxianginc.ctu.client.model;
 
-/**
- * Created by dingxiang-inc on 2017/5/23.
- */
 public enum RiskType {
     RUBBISH_REGISTRATION("垃圾注册"),
     ACCOUNT_STOLEN("账号盗用"),

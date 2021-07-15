@@ -4,22 +4,28 @@
 
 package com.dingxianginc.ctu.client.model;
 
-/**
- * @FileName: CaptchaResponse.java
- * @Description: CaptchaResponse.java类说明
- * @Author: 杜威
- * @Date: 2017/12/8 14:37
- */
 public class CaptchaResponse {
     private Boolean result;
-    private String captchaStatus;
+	private String captchaStatus;
+    private String ip;
+	private String tpc;
+    private String uid;
+	private String code;
 
-    public CaptchaResponse(Boolean result,String captchaStatus){
-        this.result = result;
-        this.captchaStatus = captchaStatus;
+	public CaptchaResponse(Boolean result, String captchaStatus) {
+		this.result = result;
+		this.captchaStatus = captchaStatus;
+	}
+
+    public CaptchaResponse(Boolean result, String captchaStatus, String ip, String tpc, String uid, String code){
+        this(result, captchaStatus);
+        this.ip = ip;
+		this.tpc = tpc;
+        this.uid = uid;
+        this.code = code;
     }
 
-    public Boolean getResult() {
+	public Boolean getResult() {
         return result;
     }
 
@@ -35,4 +41,32 @@ public class CaptchaResponse {
         this.captchaStatus = captchaStatus;
     }
 
+
+	public String getIp() {
+		return ip;
+	}
+
+	public void setIp(String ip) {
+		this.ip = ip;
+	}
+
+    public String getTpc() {
+        return tpc;
+    }
+
+    public void setTpc(String tpc) {
+        this.tpc = tpc;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+	
+	public String getCode(){return code;}
+
+	public void setCode(String code){this.code = code;}
 }

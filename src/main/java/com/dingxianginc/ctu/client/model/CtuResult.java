@@ -10,10 +10,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by dingxiang-inc on 2017/5/5.
- */
 public class CtuResult implements Serializable {
+    private String handleFlag;                      // 处置标记
     private RiskLevel riskLevel;                     // 请求的风险级别
     private String riskType;                         // 风险类型,
     private String hitPolicyCode;                    // 命中策略code
@@ -24,12 +22,22 @@ public class CtuResult implements Serializable {
 
     private String flag;                             // 客户端请求带上来的标记
     private Map<String, Object> extraInfo;           // 附加信息
+    private Map<String, String> nameListJson;
+
 
     public CtuResult() {
     }
 
     public CtuResult(RiskLevel riskLevel) {
         this.riskLevel = riskLevel;
+    }
+
+    public Map<String, String> getNameListJson() {
+        return nameListJson;
+    }
+
+    public void setNameListJson(Map<String, String> nameListJson) {
+        this.nameListJson = nameListJson;
     }
 
     /**
@@ -136,5 +144,13 @@ public class CtuResult implements Serializable {
 
     public List<Suggestion> getSuggestion() {
         return suggestion;
+    }
+
+    public String getHandleFlag() {
+        return handleFlag;
+    }
+
+    public void setHandleFlag(String handleFlag) {
+        this.handleFlag = handleFlag;
     }
 }
