@@ -37,12 +37,12 @@ public class CtuClient {
   }
 
   public CtuClient(
-      String url,
-      String appKey,
-      String appSecret,
-      int connectTimeout,
-      int connectionRequestTimeout,
-      int socketTimeout) {
+          String url,
+          String appKey,
+          String appSecret,
+          int connectTimeout,
+          int connectionRequestTimeout,
+          int socketTimeout) {
     this.url = url;
     this.appKey = appKey;
     this.appSecret = appSecret;
@@ -63,6 +63,7 @@ public class CtuClient {
     httpPost.setEntity(new ByteArrayEntity(base64Request));
     CloseableHttpResponse response = null;
 
+    String errorMsg = null;
     try {
       response = httpClient.execute(httpPost);
       if (response.getStatusLine().getStatusCode() == 200) {
@@ -70,7 +71,7 @@ public class CtuClient {
         return JSON.parseObject(resData, CtuResponse.class);
       }
     }catch (Exception e){
-
+      errorMsg = e.getMessage();
     }finally {
       if (response != null) {
         response.close();
@@ -78,9 +79,10 @@ public class CtuClient {
       httpPost.releaseConnection();
     }
     CtuResponse ctuResponse = new CtuResponse();
-    CtuResult ctuResult = new CtuResult();
-    ctuResult.setRiskLevel(RiskLevel.ACCEPT);
-    ctuResponse.setResult(ctuResult);
+    CtuEntireResult ctuEntireResult = new CtuEntireResult();
+    ctuEntireResult.addExtInfo("_exception_msg", errorMsg);
+    ctuEntireResult.setRiskLevel(RiskLevel.ACCEPT);
+    ctuResponse.setResult(ctuEntireResult);
     ctuResponse.setStatus(CtuResponseStatus.SERVER_CONNECT_FAILED);
     return ctuResponse;
   }
