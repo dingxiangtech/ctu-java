@@ -1,6 +1,6 @@
 ### Maven项目(Java7及以上版本)
 ```
-<dependency> . 
+<dependency>
   <groupId>com.dingxiang-inc</groupId>  
   <artifactId>ctu-client-sdk</artifactId>  
   <version>2.2</version>  
