@@ -23,8 +23,6 @@ public class SignUtil {
     private static final String UTF8_ENCODE = "UTF-8";
 
     /**
-     * 签名请求
-     *
      * @param appSecret
      * @param ctuRequest
      * @return
@@ -32,21 +30,17 @@ public class SignUtil {
     public static String sign(String appSecret, CtuRequest ctuRequest) {
         String sortedParams = sortedParams(ctuRequest);
 
-        // 数据签名
         return DigestUtils.md5Hex(new StringBuilder(appSecret).append(sortedParams)
                 .append(appSecret).toString());
     }
 
     public static String sign_v0(String appSecret, CtuRequest ctuRequest) {
         String sortedParams = sortedParams_v0(ctuRequest);
-        // 第一版数据签名  适配老版本
         return DigestUtils.md5Hex(new StringBuilder(appSecret).append(sortedParams)
                 .append(appSecret).toString());
     }
 
     /**
-     * 验签
-     *
      * @param appSecret
      * @param requestSign
      * @param requestInputStream

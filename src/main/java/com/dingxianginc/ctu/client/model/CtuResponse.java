@@ -7,9 +7,9 @@ package com.dingxianginc.ctu.client.model;
 import java.io.Serializable;
 
 public class CtuResponse implements Serializable {
-    private String uuid;               // 服务端返回的请求标识码，供服务端排查问题
-    private CtuResponseStatus status;  // 状态码
-    private CtuEntireResult ctuEntireResult;          // 防控结果
+    private String uuid;
+    private String status;
+    private CtuEntireResult ctuEntireResult;
 
 
     public CtuResponse() {
@@ -20,10 +20,10 @@ public class CtuResponse implements Serializable {
     }
 
     public CtuResponse(String uuid, CtuEntireResult ctuEntireResult) {
-        this(uuid, ctuEntireResult, CtuResponseStatus.SUCCESS);
+        this(uuid, ctuEntireResult, "SUCCESS");
     }
 
-    public CtuResponse(String uuid, CtuEntireResult ctuEntireResult, CtuResponseStatus status) {
+    public CtuResponse(String uuid, CtuEntireResult ctuEntireResult, String status) {
         this.uuid = uuid;
         this.ctuEntireResult = ctuEntireResult;
         this.status = status;
@@ -37,11 +37,11 @@ public class CtuResponse implements Serializable {
         this.uuid = uuid;
     }
 
-    public CtuResponseStatus getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(CtuResponseStatus status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

@@ -9,9 +9,9 @@ import java.util.Map;
 
 public class CtuRequest implements Serializable {
     private static final long serialVersionUID = -6582668008857059475L;
-    private String eventCode;            // 事件code
-    private String flag;                 // 客户端请求标记,用来标识该次请求
-    private Map<String, Object> data;    // 事件参数
+    private String eventCode;
+    private String flag;
+    private Map<String, Object> data;
 
     public String getEventCode() {
         return eventCode;

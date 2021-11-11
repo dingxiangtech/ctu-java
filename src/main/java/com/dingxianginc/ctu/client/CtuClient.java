@@ -19,11 +19,11 @@ import org.apache.http.impl.client.CloseableHttpClient;
 
 
 public class CtuClient {
-  private String url; // 风险防控服务URL
-  private String appKey; // 颁发的公钥,可公开
-  private String appSecret; // 颁发的秘钥,严禁公开,请保管好,千万不要泄露!
+  private String url;
+  private String appKey;
+  private String appSecret;
   private static final String UTF8_ENCODE = "UTF-8";
-  private static final Integer version = 1; //client版本号  从1开始
+  private static final Integer version = 1;
 
   RequestConfig requestConfig = null;
   CloseableHttpClient httpClient = null;
@@ -83,7 +83,7 @@ public class CtuClient {
     ctuEntireResult.addExtInfo("_exception_msg", errorMsg);
     ctuEntireResult.setRiskLevel(RiskLevel.ACCEPT);
     ctuResponse.setResult(ctuEntireResult);
-    ctuResponse.setStatus(CtuResponseStatus.SERVER_CONNECT_FAILED);
+    ctuResponse.setStatus("SERVER_CONNECT_FAILED");
     return ctuResponse;
   }
 

@@ -5,12 +5,12 @@
 package com.dingxianginc.ctu.client.model;
 
 public enum RiskType {
-    RUBBISH_REGISTRATION("垃圾注册"),
-    ACCOUNT_STOLEN("账号盗用"),
-    MACHINE_CRAWLING("机器爬取"),
-    BATCH_LOGON("批量登陆"),
-    MALICIOUS_GRAB("黄牛抢单"),
-    UNKNWON("未定义");
+    RUBBISH_REGISTRATION("RUBBISH_REGISTRATION"),
+    ACCOUNT_STOLEN("ACCOUNT_STOLEN"),
+    MACHINE_CRAWLING("MACHINE_CRAWLING"),
+    BATCH_LOGON("BATCH_LOGON"),
+    MALICIOUS_GRAB("MALICIOUS_GRAB"),
+    UNKNWON("UNKNWON");
 
     private String description;
 

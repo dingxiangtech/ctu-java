@@ -11,17 +11,17 @@ import java.util.List;
 import java.util.Map;
 
 public class CtuResult implements Serializable {
-    private String handleFlag;                      // 处置标记
-    private RiskLevel riskLevel;                     // 请求的风险级别
-    private String riskType;                         // 风险类型,
-    private String hitPolicyCode;                    // 命中策略code
-    private String hitPolicyName;                    // 命中策略标题
-    private List<HitRule> hitRules;                  // 命中规则
-    private List<SuggestPolicy> suggestPolicies;     // 建议防控策略
-    private List<Suggestion> suggestion;             // 命中策略处置建议
+    private String handleFlag;
+    private RiskLevel riskLevel;
+    private String riskType;
+    private String hitPolicyCode;
+    private String hitPolicyName;
+    private List<HitRule> hitRules;
+    private List<SuggestPolicy> suggestPolicies;
+    private List<Suggestion> suggestion;
 
-    private String flag;                             // 客户端请求带上来的标记
-    private Map<String, Object> extraInfo;           // 附加信息
+    private String flag;
+    private Map<String, Object> extraInfo;
     private Map<String, String> nameListJson;
 
 
@@ -41,7 +41,6 @@ public class CtuResult implements Serializable {
     }
 
     /**
-     * Reject和Review都认为是存在风险
      *
      * @return
      */
