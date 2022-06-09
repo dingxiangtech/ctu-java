@@ -34,7 +34,7 @@ public class HttpClientPool {
 
     private HttpClientPool() {
         connManager = new PoolingHttpClientConnectionManager();
-        connManager.setMaxTotal(2000);
+        connManager.setMaxTotal(1200);
         connManager.setDefaultMaxPerRoute(600);
         requestConfig = RequestConfig.custom()
                 .setConnectTimeout(connectTimeout).setConnectionRequestTimeout(connectionRequestTimeout)
