@@ -25,9 +25,9 @@ import java.util.Set;
 
 public class CtuConstidClient {
 
-    private String url; // 设备指纹服务域名
-    private String appKey; // 颁发的公钥,可公开
-    private String appSecret; // 颁发的秘钥,严禁公开,请保管好,千万不要泄露!
+    private String url;
+    private String appKey;
+    private String appSecret;
 
     private final static String DEVICE_INFO_URL = "/udid/api/getDeviceInfo";
     public final static String DEVICE_INFO_DECRYPT_URL = "/udid/api/deviceRisk";
@@ -61,12 +61,6 @@ public class CtuConstidClient {
                 .setSocketTimeout(socketTimeout).build();
     }
 
-    /**
-     * 获取设备指纹详情
-     * @param token 设备指纹token
-     * @return
-     * @throws IOException
-     */
     public String getDeviceInfo(String token) throws IOException {
         return getDeviceInfo(token, doTranslate);
     }
@@ -76,6 +70,7 @@ public class CtuConstidClient {
         map.put("appId", appKey);
         map.put("sign", generationSign(appSecret, token));
         map.put("doTranslate", translate);
+        map.put("version", "2.0");
 
         try {
             map.put("token", URLEncoder.encode(token, CtuConstidContext.DEFAULT_CHARSET.name()));
@@ -84,14 +79,6 @@ public class CtuConstidClient {
         return doPost(url + DEVICE_INFO_URL, map);
     }
 
-    /**
-     * 态势感知数据解密
-     * @param sid 即businessDigest
-     * @param businessSign
-     * @param data
-     * @return
-     * @throws IOException
-     */
     public RiskResponse getRiskInfo(String sid, String businessSign, Map<String, String> data) throws IOException {
         if (StringUtils.isEmpty(sid)
                 || StringUtils.isEmpty(businessSign)
@@ -110,13 +97,6 @@ public class CtuConstidClient {
         return JSONObject.parseObject(result, RiskResponse.class);
     }
 
-    /**
-     * 构造POST请求
-     * @param regionUrl
-     * @param map
-     * @return
-     * @throws IOException
-     */
     private String doPost(String regionUrl, Map<String, Object> map) throws IOException {
         String result = "";
         CloseableHttpResponse httpResponse = null;
@@ -152,12 +132,6 @@ public class CtuConstidClient {
         return result;
     }
 
-    /**
-     * token生成签名
-     * @param appSecret
-     * @param token
-     * @return
-     */
     public static String generationSign(String appSecret, String token) {
         return CtuConstidContext.md5(new byte[][]{appSecret.getBytes(CtuConstidContext.DEFAULT_CHARSET), token.getBytes(CtuConstidContext.DEFAULT_CHARSET), appSecret.getBytes(CtuConstidContext.DEFAULT_CHARSET)});
     }
