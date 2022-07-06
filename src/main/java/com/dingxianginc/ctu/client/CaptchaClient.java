@@ -6,8 +6,8 @@ import com.dingxianginc.ctu.client.model.CaptchaResponse;
 import com.dingxianginc.ctu.client.model.CaptchaStatus;
 import com.dingxianginc.ctu.client.util.HttpClientPool;
 import com.dingxianginc.ctu.client.util.InputStreamUtils;
-import com.dingxianginc.ctu.client.util.StringUtils;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -59,9 +59,7 @@ public class CaptchaClient {
   }
 
   private CaptchaResponse getResponse(String token, String ip) throws Exception {
-    if (StringUtils.isEmpty(token)
-            || StringUtils.isEmpty(appId)
-            || StringUtils.isEmpty(appSecret) || (token.length() > 1024) || token.length() < 10) {
+    if (StringUtils.isAnyBlank(token, appId, appSecret)  || (token.length() > 1024) || token.length() < 10) {
       return new CaptchaResponse(false, CaptchaStatus.WRONG_PARAMETER);
     }
     String[] args = token.split(":");

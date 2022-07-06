@@ -9,6 +9,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.dingxianginc.ctu.client.model.CtuRequest;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
