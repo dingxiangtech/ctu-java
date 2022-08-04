@@ -19,6 +19,8 @@ public class CaptchaClient {
   private String captchaUrl = "https://cap.dingxiang-inc.com/api/tokenVerify";
   private String appId;
   private String appSecret;
+
+  private String sceneCode = "";
   RequestConfig requestConfig = null;
   CloseableHttpClient httpClient = null;
 
@@ -27,6 +29,11 @@ public class CaptchaClient {
     this.appSecret = appSecret;
     this.httpClient = HttpClientPool.getInstance().getHttpClient();
     this.requestConfig = HttpClientPool.getInstance().getRequestConfig();
+  }
+
+  public CaptchaClient(String appId, String appSecret, String sceneCode) {
+    this(appId, appSecret);
+    this.sceneCode = sceneCode;
   }
 
   public void setCaptchaUrl(String captchaUrl) {
@@ -48,6 +55,12 @@ public class CaptchaClient {
                     .setConnectionRequestTimeout(connectionRequestTimeout)
                     .setSocketTimeout(socketTimeout)
                     .build();
+  }
+
+  public CaptchaClient(String appId, String appSecret, String sceneCode,
+                       int connectTimeout, int connectionRequestTimeout, int socketTimeout) {
+    this(appId, appSecret, connectTimeout, connectionRequestTimeout, socketTimeout);
+    this.sceneCode = sceneCode;
   }
 
   public CaptchaResponse verifyToken(String token, String ip) throws Exception {
@@ -72,7 +85,7 @@ public class CaptchaClient {
       key = "";
     }
     String reqUrl = String.format(
-            "%s?token=%s&constId=%s&appKey=%s&sign=%s&ip=%s", captchaUrl, args[0], key, appId, sign, (ip == null)?"":ip);
+            "%s?token=%s&constId=%s&appKey=%s&sign=%s&ip=%s&sceneCode=%s", captchaUrl, args[0], key, appId, sign, (ip == null)?"":ip, sceneCode);
     return getHttpResponse(reqUrl);
   }
 
