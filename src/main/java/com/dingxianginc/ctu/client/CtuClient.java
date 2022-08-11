@@ -11,6 +11,7 @@ import com.dingxianginc.ctu.client.util.HttpClientPool;
 import com.dingxianginc.ctu.client.util.InputStreamUtils;
 import com.dingxianginc.ctu.client.util.SignUtil;
 import org.apache.commons.codec.binary.Base64;
+import org.apache.http.HttpHost;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -50,6 +51,26 @@ public class CtuClient {
     this.requestConfig = RequestConfig.custom()
             .setConnectTimeout(connectTimeout).setConnectionRequestTimeout(connectionRequestTimeout)
             .setSocketTimeout(socketTimeout).build();
+  }
+
+  public CtuClient(String url,
+                   String appKey,
+                   String appSecret,
+                   int connectTimeout,
+                   int connectionRequestTimeout,
+                   int socketTimeout,
+                   String proxyHostName,
+                   int proxyPort) {
+    this.url = url;
+    this.appKey = appKey;
+    this.appSecret = appSecret;
+    this.httpClient = HttpClientPool.getInstance().getHttpClient();
+    this.requestConfig = RequestConfig.custom()
+            .setConnectTimeout(connectTimeout)
+            .setConnectionRequestTimeout(connectionRequestTimeout)
+            .setSocketTimeout(socketTimeout)
+            .setProxy(new HttpHost(proxyHostName, proxyPort))
+            .build();
   }
 
   public CtuResponse checkRisk(CtuRequest request) throws Exception {

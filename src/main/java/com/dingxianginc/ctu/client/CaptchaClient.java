@@ -8,6 +8,7 @@ import com.dingxianginc.ctu.client.util.HttpClientPool;
 import com.dingxianginc.ctu.client.util.InputStreamUtils;
 import com.dingxianginc.ctu.client.util.StringUtils;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.http.HttpHost;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -48,6 +49,24 @@ public class CaptchaClient {
                     .setConnectionRequestTimeout(connectionRequestTimeout)
                     .setSocketTimeout(socketTimeout)
                     .build();
+  }
+
+  public CaptchaClient(String appId,
+                   String appSecret,
+                   int connectTimeout,
+                   int connectionRequestTimeout,
+                   int socketTimeout,
+                   String proxyHostName,
+                   int proxyPort) {
+    this.appId = appId;
+    this.appSecret = appSecret;
+    this.httpClient = HttpClientPool.getInstance().getHttpClient();
+    this.requestConfig = RequestConfig.custom()
+            .setConnectTimeout(connectTimeout)
+            .setConnectionRequestTimeout(connectionRequestTimeout)
+            .setSocketTimeout(socketTimeout)
+            .setProxy(new HttpHost(proxyHostName, proxyPort))
+            .build();
   }
 
   public CaptchaResponse verifyToken(String token, String ip) throws Exception {
